@@ -38,6 +38,8 @@ public class Endereco {
 
     @Override
     public String toString() {
+        if(numeroCasa == 0)
+            return rua + ", NÃO INFORMADO , " + cidade;
         return rua + ", " + numeroCasa + ", " + cidade;
     }
 }

@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.exception.ValidacoesHandler;
 import org.example.model.Endereco;
 import org.example.model.Pet;
 import org.example.model.Sexo;
@@ -9,13 +10,13 @@ import org.example.util.CapitalizaPalavras;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import static org.example.model.Tipo.*;
 
 public class CadastrarPet {
 
     private static CapitalizaPalavras capitalizaPalavras = new CapitalizaPalavras();
+    private static ValidacoesHandler validacoesHandler = new ValidacoesHandler();
 
     public static void sistemaDeCadastro(Scanner scanner, File file) {
 
@@ -37,7 +38,7 @@ public class CadastrarPet {
 
             BufferedWriter bfw = new BufferedWriter(fw);
 
-            bfw.write("1 - " + newPet.getNome_sobrenome());
+            bfw.write("1 - " + ValidacoesHandler.validarValoresNulos(newPet.getNome_sobrenome()));
             bfw.newLine();
             bfw.write("2 - " + newPet.getTipo().getAnimal());
             bfw.newLine();
@@ -45,11 +46,11 @@ public class CadastrarPet {
             bfw.newLine();
             bfw.write("4 - " + newPet.getEndereco().toString());
             bfw.newLine();
-            bfw.write("5 - " + newPet.getIdade().toString() + " anos");
+            bfw.write("5 - " + ValidacoesHandler.validarValoresNulos(newPet.getIdade().toString()) + " anos");
             bfw.newLine();
-            bfw.write("6 - " + newPet.getPeso().toString() + "kg");
+            bfw.write("6 - " + ValidacoesHandler.validarValoresNulos(newPet.getPeso().toString()) + "kg");
             bfw.newLine();
-            bfw.write("7 - " + newPet.getRaca());
+            bfw.write("7 - " + ValidacoesHandler.validarValoresNulos(newPet.getRaca()));
             bfw.flush();
             bfw.close();
         }
@@ -61,12 +62,13 @@ public class CadastrarPet {
     private static Pet criandoPet(Scanner scanner, FileReader fileReader) throws IOException {
 
         Pet pet = new Pet();
-
         BufferedReader bfReader = new BufferedReader(fileReader);
 
         System.out.println(bfReader.readLine());
         scanner.nextLine(); // consume a quebra de linha.
-        pet.setNome_sobrenome(capitalizaPalavras.Capitalizador(scanner.nextLine()));
+        String nomeSobrenome = scanner.nextLine();
+        validacoesHandler.validarNomeSobrenome(nomeSobrenome);
+        pet.setNome_sobrenome(capitalizaPalavras.Capitalizador(nomeSobrenome));
 
         System.out.println(bfReader.readLine());
         pet.setTipo(validandoTipoEnum(scanner));
@@ -78,14 +80,18 @@ public class CadastrarPet {
         pet.setEndereco(verificaEndereco(scanner));
 
         System.out.println(bfReader.readLine());
-        pet.setIdade(scanner.nextFloat());
+        Float idade = validacoesHandler.validarIdade(scanner.nextFloat());
+        pet.setIdade(idade);
 
         System.out.println(bfReader.readLine());
-        pet.setPeso(scanner.nextFloat());
+        Float peso = validacoesHandler.validarPeso(scanner.nextFloat());
+        pet.setPeso(peso);
 
         System.out.println(bfReader.readLine());
         scanner.nextLine(); // consume a quebra de linha.
-        pet.setRaca(capitalizaPalavras.Capitalizador(scanner.nextLine()));
+        String raca = scanner.nextLine();
+        validacoesHandler.contemApenasLetras(raca);
+        pet.setRaca(capitalizaPalavras.Capitalizador(raca));
 
         bfReader.close();
         return pet;
@@ -128,7 +134,8 @@ public class CadastrarPet {
             else if (tipo.equals("GATO"))
                 return Gato;
             else
-                System.err.println("Esse animal não é uma opção.\nEscolha entre Cachorro ou Gato!");
+                System.err.println("Esse animal não é uma opção.\n" +
+                        "Escolha entre Cachorro ou Gato!");
 
         }
     }
@@ -143,6 +150,9 @@ public class CadastrarPet {
         System.out.print("Digite a Rua: ");
         String rua = scanner.nextLine();
 
-        return new Endereco(numCasa, capitalizaPalavras.Capitalizador(cidade), capitalizaPalavras.Capitalizador(rua));
+        return new Endereco(
+                numCasa,
+                capitalizaPalavras.Capitalizador(cidade),
+                capitalizaPalavras.Capitalizador(rua));
     }
 }

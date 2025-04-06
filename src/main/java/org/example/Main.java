@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.service.AlterarDadosPet;
 import org.example.service.CadastrarPet;
 import org.example.service.GerarFormulario;
 
@@ -29,8 +30,13 @@ public class Main {
             case 1:
                 CadastrarPet.sistemaDeCadastro(scanner, file);
                 break;
+            case 2:
+                AlterarDadosPet.atualizaDadosPet(scanner);
+                break;
             default:
-                System.out.println("essa opção não existe!");
+                System.err.println("essa opção não existe!");
         }
+
+        scanner.close();
     }
 }
