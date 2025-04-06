@@ -4,6 +4,7 @@ import org.example.model.Endereco;
 import org.example.model.Pet;
 import org.example.model.Sexo;
 import org.example.model.Tipo;
+import org.example.util.CapitalizaPalavras;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,8 @@ import java.util.regex.Pattern;
 import static org.example.model.Tipo.*;
 
 public class CadastrarPet {
+
+    private static CapitalizaPalavras capitalizaPalavras = new CapitalizaPalavras();
 
     public static void sistemaDeCadastro(Scanner scanner, File file) {
 
@@ -42,9 +45,9 @@ public class CadastrarPet {
             bfw.newLine();
             bfw.write("4 - " + newPet.getEndereco().toString());
             bfw.newLine();
-            bfw.write("5 - " + newPet.getIdade().toString());
+            bfw.write("5 - " + newPet.getIdade().toString() + " anos");
             bfw.newLine();
-            bfw.write("6 - " + newPet.getPeso().toString());
+            bfw.write("6 - " + newPet.getPeso().toString() + "kg");
             bfw.newLine();
             bfw.write("7 - " + newPet.getRaca());
             bfw.flush();
@@ -63,7 +66,7 @@ public class CadastrarPet {
 
         System.out.println(bfReader.readLine());
         scanner.nextLine(); // consume a quebra de linha.
-        pet.setNome_sobrenome(capitalizarTodasPalavras(scanner.nextLine()));
+        pet.setNome_sobrenome(capitalizaPalavras.Capitalizador(scanner.nextLine()));
 
         System.out.println(bfReader.readLine());
         pet.setTipo(validandoTipoEnum(scanner));
@@ -82,7 +85,7 @@ public class CadastrarPet {
 
         System.out.println(bfReader.readLine());
         scanner.nextLine(); // consume a quebra de linha.
-        pet.setRaca(capitalizarTodasPalavras(scanner.nextLine()));
+        pet.setRaca(capitalizaPalavras.Capitalizador(scanner.nextLine()));
 
         bfReader.close();
         return pet;
@@ -140,15 +143,6 @@ public class CadastrarPet {
         System.out.print("Digite a Rua: ");
         String rua = scanner.nextLine();
 
-        return new Endereco(numCasa, capitalizarTodasPalavras(cidade), capitalizarTodasPalavras(rua));
+        return new Endereco(numCasa, capitalizaPalavras.Capitalizador(cidade), capitalizaPalavras.Capitalizador(rua));
     }
-
-    private static String capitalizarTodasPalavras(String texto) {
-        return texto == null ? null :
-                Pattern.compile("(\\b\\p{Ll})(\\p{L}*)")
-                        .matcher(texto.toLowerCase())
-                        .replaceAll(mr -> mr.group(1).toUpperCase() + mr.group(2));
-    }
-
-
 }
