@@ -1,7 +1,36 @@
 package org.example;
 
+import org.example.service.CadastrarPet;
+import org.example.service.GerarFormulario;
+
+import java.io.File;
+import java.util.Locale;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+
+        GerarFormulario.criaArquivoFormulario();
+        Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
+
+        System.out.println("Sistema de Cadastro");
+        System.out.println("(1) Cadastrar um novo pet");
+        System.out.println("(2) Alterar os dados do pet cadastrado");
+        System.out.println("(3) Deletar um pet cadastrado");
+        System.out.println("(4) Listar todos os pets cadastrados");
+        System.out.println("(5) Listar pets por algum critério(idade, nome, raça)");
+        System.out.println("(6) Sair");
+        System.out.print("Digite o numero da opção do que deseja: ");
+
+        File file = new File("formulario.txt");
+
+        int response = scanner.nextInt();;
+        switch(response){
+            case 1:
+                CadastrarPet.sistemaDeCadastro(scanner, file);
+                break;
+            default:
+                System.out.println("essa opção não existe!");
+        }
     }
 }
