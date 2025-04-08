@@ -34,7 +34,7 @@ public class CadastrarPet {
         Pet newPet = criandoPet(scanner, fileReader);
         String nomeArquivoPet = criaNomeArquivoPet(newPet);
 
-        try (FileWriter fw = new FileWriter(nomeArquivoPet + ".txt")) {
+        try (FileWriter fw = new FileWriter("petsCadastrados/"+ nomeArquivoPet + ".txt")) {
 
             BufferedWriter bfw = new BufferedWriter(fw);
 

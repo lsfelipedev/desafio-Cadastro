@@ -15,7 +15,7 @@ public class ValidacoesHandler {
 
     public void contemApenasLetras(String letras){
         if(!letras.isEmpty() && !letras.matches("^[a-zA-Z ]+$"))
-            throw new IllegalArgumentException("So é permitido letras de A-Z.");
+            throw new IllegalArgumentException("So é permitido letras de A-Z e sem acentos.");
     }
 
     public Float validarPeso(Float peso){
