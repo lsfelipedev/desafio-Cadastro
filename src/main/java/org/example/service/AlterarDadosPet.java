@@ -17,37 +17,38 @@ public class AlterarDadosPet {
         Tipo tipo = criterioBuscaPet.selecioneTipoAnimal(scanner);
         int[] opcoes = {criterioBuscaPet.primeiroCriterio(scanner), criterioBuscaPet.segundoCriterio(scanner)};
 
-        Map<String, String> palavrasPesquisar = arquivoSelecionado(opcoes, scanner);
+        Map<String, String> palavrasPesquisar = pesquisarPalavra(opcoes, scanner);
 
 
         File pasta = new File("petsCadastrados");
+
         File[] files = pasta.listFiles((dir, nome) -> nome.endsWith(".txt"));
+        List<File> filesSelecionados = new ArrayList<>();
         for (File file : files) {
-            lerArquivo(tipo ,file, palavrasPesquisar);
+            filesSelecionados.add(arquivosSelecionados(tipo, file, palavrasPesquisar));
         }
+        filesSelecionados.stream().filter(Objects::nonNull).forEach(AlterarDadosPet::lerArquivo);
     }
 
-    private static List<File> lerArquivo(Tipo tipo, File arquivo, Map<String, String> pesquisarPalavras) {
+    private static File arquivosSelecionados(Tipo tipo, File arquivo, Map<String, String> pesquisarPalavras) {
 
-        List<File> files = new ArrayList<>();
+        File files = null;
         String linha;
         String pesquisar;
 
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-            System.out.println("\n--- Conteúdo de " + arquivo.getName() + " ---");
-
             while ((linha = br.readLine()) != null) {
-                System.out.println(linha.toLowerCase());
+                linha = linha.toLowerCase();
 
-                for (var key : pesquisarPalavras.keySet()) {
-                    if (linha.startsWith(key)) {
-                        pesquisar = pesquisarPalavras.get(key).toLowerCase();
+                for (var keyValue : pesquisarPalavras.entrySet()) {
+                    if (linha.startsWith(keyValue.getKey())) {
+                        pesquisar = keyValue.getValue().toLowerCase();
                         if(linha.contains(pesquisar))
-                            files.add(arquivo);
+                            files = arquivo;
                     }
                 }
+                return files;
             }
-            return files;
 
         } catch (IOException e) {
             System.err.println("Erro ao ler arquivo: " + arquivo.getName());
@@ -56,9 +57,10 @@ public class AlterarDadosPet {
         return files;
     }
 
-    private static Map<String, String> arquivoSelecionado(int[] valores, Scanner scanner){
+    private static Map<String, String> pesquisarPalavra(int[] valores, Scanner scanner){
 
         Map<String, String> pesquisa = new HashMap<>();
+        scanner.nextLine(); // Consome a quebra de linha pendente
 
         for (Integer valor : valores) {
 
@@ -95,5 +97,19 @@ public class AlterarDadosPet {
         }
 
         return pesquisa;
+    }
+
+
+    private static void lerArquivo(File arquivo) {
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+            System.out.println("\n--- Conteúdo de " + arquivo.getName() + " ---");
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                System.out.println(linha);
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao ler arquivo: " + arquivo.getName());
+            e.printStackTrace();
+        }
     }
 }
