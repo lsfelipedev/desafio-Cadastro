@@ -27,34 +27,38 @@ public class AlterarDadosPet {
         for (File file : files) {
             filesSelecionados.add(arquivosSelecionados(tipo, file, palavrasPesquisar));
         }
-        filesSelecionados.stream().filter(Objects::nonNull).forEach(AlterarDadosPet::lerArquivo);
+        filesSelecionados.stream().filter(Objects::nonNull)
+                .forEach(AlterarDadosPet::lerArquivo);
     }
 
     private static File arquivosSelecionados(Tipo tipo, File arquivo, Map<String, String> pesquisarPalavras) {
 
-        File files = null;
         String linha;
-        String pesquisar;
+        boolean palavraEncontrada = false, tipoEncontrado = false;
 
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
             while ((linha = br.readLine()) != null) {
                 linha = linha.toLowerCase();
 
                 for (var keyValue : pesquisarPalavras.entrySet()) {
-                    if (linha.startsWith(keyValue.getKey())) {
-                        pesquisar = keyValue.getValue().toLowerCase();
-                        if(linha.contains(pesquisar))
-                            files = arquivo;
-                    }
-                }
-                return files;
-            }
 
-        } catch (IOException e) {
+                    if (linha.startsWith(keyValue.getKey()) &&
+                            linha.contains(keyValue.getValue().toLowerCase()))
+                            palavraEncontrada = true;
+
+                    if (linha.contains(tipo.toString().toLowerCase()))
+                        tipoEncontrado = true;
+
+                    if(palavraEncontrada && tipoEncontrado)
+                        return arquivo;
+                }
+            }
+        }
+        catch (IOException e) {
             System.err.println("Erro ao ler arquivo: " + arquivo.getName());
             e.printStackTrace();
         }
-        return files;
+        return null;
     }
 
     private static Map<String, String> pesquisarPalavra(int[] valores, Scanner scanner){
@@ -95,10 +99,8 @@ public class AlterarDadosPet {
                     System.err.println("Não existe essa opção!");
             }
         }
-
         return pesquisa;
     }
-
 
     private static void lerArquivo(File arquivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
@@ -107,7 +109,8 @@ public class AlterarDadosPet {
             while ((linha = br.readLine()) != null) {
                 System.out.println(linha);
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Erro ao ler arquivo: " + arquivo.getName());
             e.printStackTrace();
         }
