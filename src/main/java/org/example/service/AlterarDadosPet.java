@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.model.Tipo;
 import org.example.util.CriterioBuscaPet;
+import org.example.util.RemovedorAcentos;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,6 +24,7 @@ public class AlterarDadosPet {
         File pasta = new File("petsCadastrados");
 
         File[] files = pasta.listFiles((dir, nome) -> nome.endsWith(".txt"));
+
         List<File> filesSelecionados = new ArrayList<>();
         for (File file : files) {
             filesSelecionados.add(arquivosSelecionados(tipo, file, palavrasPesquisar));
@@ -50,6 +52,9 @@ public class AlterarDadosPet {
                 linha = linha.toLowerCase();
 
                 for (var keyValue : pesquisarPalavras.entrySet()) {
+
+
+                    linha = RemovedorAcentos.tirarAcentosPalavras(linha);
 
                     if (linha.startsWith(keyValue.getKey()) &&
                             linha.contains(keyValue.getValue().toLowerCase()))
