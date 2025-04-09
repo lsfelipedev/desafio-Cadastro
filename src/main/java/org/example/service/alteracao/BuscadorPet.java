@@ -58,6 +58,7 @@ public class BuscadorPet {
                                              File arquivo,
                                              Map<String, String> pesquisarPalavras) {
 
+
         String linha;
         boolean palavraEncontrada = false, tipoEncontrado = false;
 

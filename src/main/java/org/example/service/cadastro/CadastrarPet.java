@@ -4,8 +4,9 @@ import org.example.exception.ValidacoesHandler;
 import org.example.model.Endereco;
 import org.example.model.Pet;
 import org.example.util.CapitalizaPalavras;
+import org.example.util.CriaTituloArquivo;
+
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class CadastrarPet {
@@ -13,6 +14,8 @@ public class CadastrarPet {
     private static CapitalizaPalavras capitalizaPalavras = new CapitalizaPalavras();
     private static ValidacoesHandler validacoesHandler = new ValidacoesHandler();
     private static ValidacaoEnum validacaoEnum = new ValidacaoEnum();
+
+
     public static void sistemaDeCadastro(Scanner scanner, File file) {
 
         try (FileReader fileReader = new FileReader(file)) {
@@ -27,7 +30,7 @@ public class CadastrarPet {
     public static void criaArquivoPet(Scanner scanner, FileReader fileReader) throws IOException {
 
         Pet newPet = criandoPet(scanner, fileReader);
-        String nomeArquivoPet = criaNomeArquivoPet(newPet);
+        String nomeArquivoPet = CriaTituloArquivo.criaNomeArquivoPet(newPet);
 
         try (FileWriter fw = new FileWriter("petsCadastrados/"+ nomeArquivoPet + ".txt")) {
 
@@ -90,21 +93,6 @@ public class CadastrarPet {
 
         bfReader.close();
         return pet;
-    }
-
-    private static String criaNomeArquivoPet(Pet pet){
-
-        LocalDateTime localDateTime = LocalDateTime.now();
-
-        return "" +
-                localDateTime.getYear() +
-                localDateTime.getDayOfMonth() +
-                localDateTime.getDayOfMonth() +
-                "T" +
-                localDateTime.getHour() +
-                localDateTime.getMinute() +
-                "-" +
-                pet.getNome_sobrenome().toUpperCase().replaceAll(" ", "");
     }
 
     private static Endereco verificaEndereco(Scanner scanner){

@@ -30,7 +30,7 @@ public class ValidacoesHandler {
         return idade;
     }
 
-    public static String validarValoresNulos(String pet) throws IOException {
+    public static String validarValoresNulos(String pet) {
 
         if(!pet.isEmpty())
             return pet;

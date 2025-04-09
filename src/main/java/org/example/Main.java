@@ -5,11 +5,12 @@ import org.example.service.cadastro.CadastrarPet;
 import org.example.service.GerarFormulario;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         GerarFormulario.criaArquivoFormulario();
         Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
@@ -31,7 +32,7 @@ public class Main {
                 CadastrarPet.sistemaDeCadastro(scanner, file);
                 break;
             case 2:
-                AlterarDadosPet.atualizaDadosPet(scanner);
+                AlterarDadosPet.sistemaAlteracao(scanner);
                 break;
             default:
                 System.err.println("essa opção não existe!");
