@@ -1,7 +1,6 @@
-package org.example.util;
+package org.example.service.alteracao;
 
 import org.example.model.Tipo;
-
 import java.util.Scanner;
 
 public class CriterioBuscaPet {

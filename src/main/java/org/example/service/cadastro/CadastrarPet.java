@@ -1,23 +1,18 @@
-package org.example.service;
+package org.example.service.cadastro;
 
 import org.example.exception.ValidacoesHandler;
 import org.example.model.Endereco;
 import org.example.model.Pet;
-import org.example.model.Sexo;
-import org.example.model.Tipo;
 import org.example.util.CapitalizaPalavras;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
-
-import static org.example.model.Tipo.*;
 
 public class CadastrarPet {
 
     private static CapitalizaPalavras capitalizaPalavras = new CapitalizaPalavras();
     private static ValidacoesHandler validacoesHandler = new ValidacoesHandler();
-
+    private static ValidacaoEnum validacaoEnum = new ValidacaoEnum();
     public static void sistemaDeCadastro(Scanner scanner, File file) {
 
         try (FileReader fileReader = new FileReader(file)) {
@@ -71,10 +66,10 @@ public class CadastrarPet {
         pet.setNome_sobrenome(capitalizaPalavras.Capitalizador(nomeSobrenome));
 
         System.out.println(bfReader.readLine());
-        pet.setTipo(validandoTipoEnum(scanner));
+        pet.setTipo(validacaoEnum.validandoTipoEnum(scanner));
 
         System.out.println(bfReader.readLine());
-        pet.setSexo(validandoSexoEnum(scanner));
+        pet.setSexo(validacaoEnum.validandoSexoEnum(scanner));
 
         System.out.println(bfReader.readLine());
         pet.setEndereco(verificaEndereco(scanner));
@@ -110,34 +105,6 @@ public class CadastrarPet {
                 localDateTime.getMinute() +
                 "-" +
                 pet.getNome_sobrenome().toUpperCase().replaceAll(" ", "");
-    }
-
-    private static Sexo validandoSexoEnum(Scanner scanner) {
-        while (true){
-            String sexo = scanner.next().toUpperCase();
-
-            if (sexo.equals("MACHO"))
-                return Sexo.Macho;
-            else if (sexo.equals("GATO"))
-                return Sexo.Femea;
-            else
-                System.err.println("Esse sexo não é uma opção.\nEscolha entre Macho ou Femea!");
-        }
-    }
-
-    private static Tipo validandoTipoEnum(Scanner scanner) {
-        while (true){
-            String tipo = scanner.next().toUpperCase();
-
-            if (tipo.equals("CACHORRO"))
-                return Cachorro;
-            else if (tipo.equals("GATO"))
-                return Gato;
-            else
-                System.err.println("Esse animal não é uma opção.\n" +
-                        "Escolha entre Cachorro ou Gato!");
-
-        }
     }
 
     private static Endereco verificaEndereco(Scanner scanner){

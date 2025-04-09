@@ -1,7 +1,7 @@
 package org.example;
 
-import org.example.service.AlterarDadosPet;
-import org.example.service.CadastrarPet;
+import org.example.service.alteracao.AlterarDadosPet;
+import org.example.service.cadastro.CadastrarPet;
 import org.example.service.GerarFormulario;
 
 import java.io.File;
