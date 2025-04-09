@@ -53,7 +53,6 @@ public class AlterarDadosPet {
 
                 for (var keyValue : pesquisarPalavras.entrySet()) {
 
-
                     linha = RemovedorAcentos.tirarAcentosPalavras(linha);
 
                     if (linha.startsWith(keyValue.getKey()) &&

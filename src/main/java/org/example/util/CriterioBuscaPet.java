@@ -26,26 +26,26 @@ public class CriterioBuscaPet {
 
     public int primeiroCriterio(Scanner scanner) {
 
-        System.out.println("Seleciona o numero do critério de busca do pet para atualizar:");
-        System.out.println("1 - Nome ou sobrenome");
-        System.out.println("2 - Sexo");
-        System.out.println("3 - Idade");
-        System.out.println("4 - Peso");
-        System.out.println("5 - Raça");
-        System.out.println("6 - Endereço");
-        int criterio = scanner.nextInt();
+        while (true){
+            System.out.println("Seleciona o numero do critério de busca do pet para atualizar:");
+            System.out.println("1 - Nome ou sobrenome");
+            System.out.println("2 - Sexo");
+            System.out.println("3 - Idade");
+            System.out.println("4 - Peso");
+            System.out.println("5 - Raça");
+            System.out.println("6 - Endereço");
+            int criterio = scanner.nextInt();
 
-        if(criterio > 6 || criterio < 1){
+            if(criterio <= 6 && criterio >= 1){
+                return criterio;
+            }
             System.err.println("Esse numero não uma opção. Escolha entre 1 e 6.");
-            primeiroCriterio(scanner);
         }
-        return criterio;
     }
 
 
     public int segundoCriterio(Scanner scanner){
         String resposta;
-
         while (true) {
             System.out.println("que adicionar mais 1 critério de busca?? [S/N]");
             resposta = scanner.next().toUpperCase();
@@ -56,7 +56,6 @@ public class CriterioBuscaPet {
                 break;
             else
                 System.err.println("Escolha entre 'S' ou 'N' como resposta.");
-
         }
         return 0;
     }
