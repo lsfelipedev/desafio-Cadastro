@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AlterarDadosPet {
 
@@ -19,7 +20,6 @@ public class AlterarDadosPet {
 
         Map<String, String> palavrasPesquisar = pesquisarPalavra(opcoes, scanner);
 
-
         File pasta = new File("petsCadastrados");
 
         File[] files = pasta.listFiles((dir, nome) -> nome.endsWith(".txt"));
@@ -27,11 +27,20 @@ public class AlterarDadosPet {
         for (File file : files) {
             filesSelecionados.add(arquivosSelecionados(tipo, file, palavrasPesquisar));
         }
+
+        AtomicInteger num = new AtomicInteger(1);
+
         filesSelecionados.stream().filter(Objects::nonNull)
-                .forEach(AlterarDadosPet::lerArquivo);
+                .forEach(s-> {
+                    System.out.print(num.getAndIncrement() + ".");
+                    AlterarDadosPet.lerArquivo(s);
+                    System.out.println();
+                });
     }
 
-    private static File arquivosSelecionados(Tipo tipo, File arquivo, Map<String, String> pesquisarPalavras) {
+    private static File arquivosSelecionados(Tipo tipo,
+                                             File arquivo,
+                                             Map<String, String> pesquisarPalavras) {
 
         String linha;
         boolean palavraEncontrada = false, tipoEncontrado = false;
@@ -104,10 +113,14 @@ public class AlterarDadosPet {
 
     private static void lerArquivo(File arquivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-            System.out.println("\n--- Conteúdo de " + arquivo.getName() + " ---");
             String linha;
             while ((linha = br.readLine()) != null) {
-                System.out.println(linha);
+
+                if (linha.startsWith("1")) {
+                    System.out.print(linha.substring(3));
+                    continue;
+                }
+                System.out.print(linha.substring(1));
             }
         }
         catch (IOException e) {
