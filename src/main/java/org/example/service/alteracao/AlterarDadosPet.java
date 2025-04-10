@@ -20,7 +20,6 @@ public class AlterarDadosPet {
 
     public static void sistemaAlteracao(Scanner scanner){
        try {
-
         Tipo tipo = CriterioBuscaPet.selecioneTipoAnimal(scanner);
         int[] opcoes = {CriterioBuscaPet.primeiroCriterio(scanner),
                 CriterioBuscaPet.segundoCriterio(scanner)};
@@ -146,11 +145,18 @@ public class AlterarDadosPet {
                 break;
 
             case 4:
+                System.out.print("Novo Peso: ");
                 linhaParaAlterar = linhaLista.get(3);
+                pet.setPeso(ValidacoesHandler.validarPeso(scanner.nextFloat()));
+
+                novaFrase = ValidacoesHandler.validarValoresNulos(pet.getPeso().toString(), " Kg");
+                novaFrase = "5 - " + novaFrase;
+                alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 break;
 
             case 5:
                 linhaParaAlterar = linhaLista.get(4);
+                System.out.print("Nova Raça: ");
                 break;
 
             default:
