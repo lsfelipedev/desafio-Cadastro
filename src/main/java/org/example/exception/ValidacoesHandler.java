@@ -1,10 +1,9 @@
 package org.example.exception;
 
-import java.io.IOException;
 
 public class ValidacoesHandler {
 
-    public void validarNomeSobrenome(String nomeSobrenome){
+    public static void validarNomeSobrenome(String nomeSobrenome){
 
         contemApenasLetras(nomeSobrenome);
         String[] splits = nomeSobrenome.split(" ");
@@ -13,18 +12,18 @@ public class ValidacoesHandler {
             throw new IllegalArgumentException("NOME e o SOBRENOME é Obrigatório.");
     }
 
-    public void contemApenasLetras(String letras){
+    public static void contemApenasLetras(String letras){
         if(!letras.isEmpty() && !letras.matches("^[a-zA-Z ]+$"))
             throw new IllegalArgumentException("So é permitido letras de A-Z e sem acentos.");
     }
 
-    public Float validarPeso(Float peso){
+    public static Float validarPeso(Float peso){
         if (peso > 60 || peso < 0.5)
             throw new RuntimeException("Só é permitido peso entre 0.5kg e 60kg.");
         return peso;
     }
 
-    public Float validarIdade(Float idade){
+    public static  Float validarIdade(Float idade){
         if (idade > 20)
             throw new RuntimeException("Só é permitido menor de 20 anos.");
         return idade;

@@ -9,7 +9,7 @@ import static org.example.model.Tipo.Gato;
 
 public class ValidacaoEnum {
 
-     Tipo validandoTipoEnum(Scanner scanner) {
+     static Tipo validandoTipoEnum(Scanner scanner) {
         while (true){
             String tipo = scanner.next().toUpperCase();
 
@@ -24,7 +24,7 @@ public class ValidacaoEnum {
         }
     }
 
-    Sexo validandoSexoEnum(Scanner scanner) {
+    static Sexo validandoSexoEnum(Scanner scanner) {
         while (true){
             String sexo = scanner.next().toUpperCase();
 

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class CriterioBuscaPet {
 
-    public Tipo selecioneTipoAnimal(Scanner scanner){
+    public static Tipo selecioneTipoAnimal(Scanner scanner){
         System.out.println("Primeiramente, Qual o TIPO de ANIMAL vc quer selecionar??");
         System.out.println("1 - Cachorro");
         System.out.println("2 - Gato");
@@ -23,7 +23,7 @@ public class CriterioBuscaPet {
         throw new RuntimeException("Falha no sistema do método do selecioneTipoAnimal()");
     }
 
-    public int primeiroCriterio(Scanner scanner) {
+    public static int primeiroCriterio(Scanner scanner) {
 
         while (true){
             System.out.println("Seleciona o numero do critério de busca do pet para atualizar:");
@@ -43,7 +43,7 @@ public class CriterioBuscaPet {
     }
 
 
-    public int segundoCriterio(Scanner scanner){
+    public static int segundoCriterio(Scanner scanner){
         String resposta;
         while (true) {
             System.out.println("que adicionar mais 1 critério de busca?? [S/N]");

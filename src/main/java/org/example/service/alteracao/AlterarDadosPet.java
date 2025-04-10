@@ -18,19 +18,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class AlterarDadosPet {
 
-    private static ValidacoesHandler validacoesHandler = new ValidacoesHandler();
-    private static CriterioBuscaPet criterioBuscaPet = new CriterioBuscaPet();
-    private static BuscadorPet buscadorPet = new BuscadorPet();
-
-
     public static void sistemaAlteracao(Scanner scanner){
        try {
 
-        Tipo tipo = criterioBuscaPet.selecioneTipoAnimal(scanner);
-        int[] opcoes = {criterioBuscaPet.primeiroCriterio(scanner),
-                criterioBuscaPet.segundoCriterio(scanner)};
+        Tipo tipo = CriterioBuscaPet.selecioneTipoAnimal(scanner);
+        int[] opcoes = {CriterioBuscaPet.primeiroCriterio(scanner),
+                CriterioBuscaPet.segundoCriterio(scanner)};
 
-        Map<String, String> palavrasPesquisar = buscadorPet.pesquisarPalavra(opcoes, scanner);
+        Map<String, String> palavrasPesquisar = BuscadorPet.pesquisarPalavra(opcoes, scanner);
 
         List<Path> files = arquivosFiltradoFormatado(tipo, palavrasPesquisar);
 
@@ -50,7 +45,7 @@ public class AlterarDadosPet {
 
         for (Path file : paths) {
 
-            Path arquivoBruto = buscadorPet.arquivosSelecionados(tipo, file, palavrasPesquisar);
+            Path arquivoBruto = BuscadorPet.arquivosSelecionados(tipo, file, palavrasPesquisar);
             if(arquivoBruto != null)
                 filesSelecionados.add(arquivoBruto);
         }
@@ -60,7 +55,7 @@ public class AlterarDadosPet {
             filesSelecionados.stream().filter(Objects::nonNull)
                     .forEach(s-> {
                         System.out.print(num.getAndIncrement() + ".");
-                        AlterarDadosPet.buscadorPet.lerArquivo(s);
+                        BuscadorPet.lerArquivo(s);
                         System.out.println();
                     });
 
@@ -121,8 +116,8 @@ public class AlterarDadosPet {
                 System.out.print("Novo Nome e Sobrenome: ");
 
                 novaFrase = scanner.nextLine();
-                validacoesHandler.contemApenasLetras(novaFrase);
-                validacoesHandler.validarNomeSobrenome(novaFrase);
+                ValidacoesHandler.contemApenasLetras(novaFrase);
+                ValidacoesHandler.validarNomeSobrenome(novaFrase);
 
                 novaFrase = ValidacoesHandler.validarValoresNulos(novaFrase, "");
 
@@ -142,7 +137,7 @@ public class AlterarDadosPet {
             case 3:
                 System.out.print("Nova Idade: ");
                 linhaParaAlterar = linhaLista.get(2);
-                pet.setIdade(validacoesHandler.validarIdade(scanner.nextFloat()));
+                pet.setIdade(ValidacoesHandler.validarIdade(scanner.nextFloat()));
 
                 novaFrase = ValidacoesHandler.validarValoresNulos(pet.getIdade().toString(), " anos");
 

@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class BuscadorPet {
 
 
-    public Map<String, String> pesquisarPalavra(int[] valores, Scanner scanner){
+    public static Map<String, String> pesquisarPalavra(int[] valores, Scanner scanner){
 
         Map<String, String> pesquisa = new HashMap<>();
         scanner.nextLine(); // Consome a quebra de linha pendente
@@ -54,7 +54,7 @@ public class BuscadorPet {
         return pesquisa;
     }
 
-    public Path arquivosSelecionados(Tipo tipo,
+    public static Path arquivosSelecionados(Tipo tipo,
                                              Path arquivo,
                                              Map<String, String> pesquisarPalavras) {
 
@@ -89,7 +89,7 @@ public class BuscadorPet {
         return null;
     }
 
-    public void lerArquivo(Path arquivo) {
+    public static void lerArquivo(Path arquivo) {
         try (BufferedReader br = Files.newBufferedReader(arquivo)) {
             String linha;
             while ((linha = br.readLine()) != null) {

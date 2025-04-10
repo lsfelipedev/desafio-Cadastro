@@ -14,10 +14,6 @@ import java.util.Scanner;
 
 public class CadastrarPet {
 
-    private static ValidacoesHandler validacoesHandler = new ValidacoesHandler();
-    private static ValidacaoEnum validacaoEnum = new ValidacaoEnum();
-
-
     public static void sistemaDeCadastro(Scanner scanner, Path file) {
 
         try (BufferedReader br = Files.newBufferedReader(file)) {
@@ -62,30 +58,30 @@ public class CadastrarPet {
         System.out.println(bfReader.readLine());
         scanner.nextLine(); // consume a quebra de linha.
         String nomeSobrenome = scanner.nextLine();
-        validacoesHandler.validarNomeSobrenome(nomeSobrenome);
+        ValidacoesHandler.validarNomeSobrenome(nomeSobrenome);
         pet.setNome_sobrenome(CapitalizaPalavras.Capitalizador(nomeSobrenome));
 
         System.out.println(bfReader.readLine());
-        pet.setTipo(validacaoEnum.validandoTipoEnum(scanner));
+        pet.setTipo(ValidacaoEnum.validandoTipoEnum(scanner));
 
         System.out.println(bfReader.readLine());
-        pet.setSexo(validacaoEnum.validandoSexoEnum(scanner));
+        pet.setSexo(ValidacaoEnum.validandoSexoEnum(scanner));
 
         System.out.println(bfReader.readLine());
         pet.setEndereco(NovoEndereco.verificaEndereco(scanner));
 
         System.out.println(bfReader.readLine());
-        Float idade = validacoesHandler.validarIdade(scanner.nextFloat());
+        Float idade = ValidacoesHandler.validarIdade(scanner.nextFloat());
         pet.setIdade(idade);
 
         System.out.println(bfReader.readLine());
-        Float peso = validacoesHandler.validarPeso(scanner.nextFloat());
+        Float peso = ValidacoesHandler.validarPeso(scanner.nextFloat());
         pet.setPeso(peso);
 
         System.out.println(bfReader.readLine());
         scanner.nextLine(); // consume a quebra de linha.
         String raca = scanner.nextLine();
-        validacoesHandler.contemApenasLetras(raca);
+        ValidacoesHandler.contemApenasLetras(raca);
         pet.setRaca(CapitalizaPalavras.Capitalizador(raca));
 
         bfReader.close();
