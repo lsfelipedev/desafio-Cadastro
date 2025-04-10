@@ -7,19 +7,21 @@ import org.example.util.CriaTituloArquivo;
 import org.example.util.NovoEndereco;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CadastrarPet {
 
-    private static CapitalizaPalavras capitalizaPalavras = new CapitalizaPalavras();
     private static ValidacoesHandler validacoesHandler = new ValidacoesHandler();
     private static ValidacaoEnum validacaoEnum = new ValidacaoEnum();
 
 
-    public static void sistemaDeCadastro(Scanner scanner, File file) {
+    public static void sistemaDeCadastro(Scanner scanner, Path file) {
 
-        try (FileReader fileReader = new FileReader(file)) {
-            criaArquivoPet(scanner, fileReader);
+        try (BufferedReader br = Files.newBufferedReader(file)) {
+            criaArquivoPet(scanner, br);
             System.out.println("Cadastro do Pet foi Registrado com Sucesso!");
 
         } catch (IOException e) {
@@ -27,15 +29,12 @@ public class CadastrarPet {
         }
     }
 
-    public static void criaArquivoPet(Scanner scanner, FileReader fileReader) throws IOException {
+    public static void criaArquivoPet(Scanner scanner, BufferedReader bfReader) throws IOException {
 
-        Pet newPet = criandoPet(scanner, fileReader);
+        Pet newPet = criandoPet(scanner, bfReader);
         String nomeArquivoPet = CriaTituloArquivo.criaNomeArquivoPet(newPet);
 
-        try (FileWriter fw = new FileWriter("petsCadastrados/"+ nomeArquivoPet + ".txt")) {
-
-            BufferedWriter bfw = new BufferedWriter(fw);
-
+        try (BufferedWriter bfw = Files.newBufferedWriter(Paths.get("petsCadastrados/"+ nomeArquivoPet + ".txt"))){
             bfw.write("1 - " + ValidacoesHandler.validarValoresNulos(newPet.getNome_sobrenome(), ""));
             bfw.newLine();
             bfw.write("2 - " + newPet.getTipo().getAnimal());
@@ -50,17 +49,15 @@ public class CadastrarPet {
             bfw.newLine();
             bfw.write("7 - " + ValidacoesHandler.validarValoresNulos(newPet.getRaca(), ""));
             bfw.flush();
-            bfw.close();
         }
         catch (IOException e) {
         throw new RuntimeException(e);
         }
     }
 
-    private static Pet criandoPet(Scanner scanner, FileReader fileReader) throws IOException {
+    private static Pet criandoPet(Scanner scanner, BufferedReader bfReader) throws IOException {
 
         Pet pet = new Pet();
-        BufferedReader bfReader = new BufferedReader(fileReader);
 
         System.out.println(bfReader.readLine());
         scanner.nextLine(); // consume a quebra de linha.
@@ -89,7 +86,7 @@ public class CadastrarPet {
         scanner.nextLine(); // consume a quebra de linha.
         String raca = scanner.nextLine();
         validacoesHandler.contemApenasLetras(raca);
-        pet.setRaca(capitalizaPalavras.Capitalizador(raca));
+        pet.setRaca(CapitalizaPalavras.Capitalizador(raca));
 
         bfReader.close();
         return pet;

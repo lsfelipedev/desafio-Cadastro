@@ -9,43 +9,52 @@ import org.example.util.CriaTituloArquivo;
 import org.example.util.NovoEndereco;
 
 import java.io.*;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AlterarDadosPet {
 
-    private static CapitalizaPalavras capitalizaPalavras = new CapitalizaPalavras();
     private static ValidacoesHandler validacoesHandler = new ValidacoesHandler();
-
     private static CriterioBuscaPet criterioBuscaPet = new CriterioBuscaPet();
     private static BuscadorPet buscadorPet = new BuscadorPet();
 
+
     public static void sistemaAlteracao(Scanner scanner){
+       try {
+
         Tipo tipo = criterioBuscaPet.selecioneTipoAnimal(scanner);
         int[] opcoes = {criterioBuscaPet.primeiroCriterio(scanner),
                 criterioBuscaPet.segundoCriterio(scanner)};
 
         Map<String, String> palavrasPesquisar = buscadorPet.pesquisarPalavra(opcoes, scanner);
 
-        List<File> files = arquivosFiltradoFormatado(tipo, palavrasPesquisar);
+        List<Path> files = arquivosFiltradoFormatado(tipo, palavrasPesquisar);
 
         alterarDadosPet(files, scanner);
+
+       }
+       catch (IOException e){
+           throw new RuntimeException("Fala ao alterar o arquivo. \nErro: " + e.getMessage());
+       }
     }
 
-    private static List<File> arquivosFiltradoFormatado(Tipo tipo, Map<String, String> palavrasPesquisar){
-        File pasta = new File("petsCadastrados");
-        File[] files = pasta.listFiles((dir, nome) -> nome.endsWith(".txt"));
-        List<File> filesSelecionados = new ArrayList<>();
+    private static List<Path> arquivosFiltradoFormatado(Tipo tipo, Map<String, String> palavrasPesquisar) throws IOException {
+        Path pasta = Paths.get("petsCadastrados");
+        DirectoryStream<Path> paths = Files.newDirectoryStream(pasta, "*.txt");
+        List<Path> filesSelecionados = new ArrayList<>();
         AtomicInteger num = new AtomicInteger(1);
 
-        for (File file : files) {
+        for (Path file : paths) {
 
-            File arquivoBruto = buscadorPet.arquivosSelecionados(tipo, file, palavrasPesquisar);
+            Path arquivoBruto = buscadorPet.arquivosSelecionados(tipo, file, palavrasPesquisar);
             if(arquivoBruto != null)
                 filesSelecionados.add(arquivoBruto);
         }
+        paths.close();
 
         if(filesSelecionados.size() > 1)
             filesSelecionados.stream().filter(Objects::nonNull)
@@ -58,7 +67,7 @@ public class AlterarDadosPet {
         return filesSelecionados;
     }
 
-    private static void alterarDadosPet(List<File> files, Scanner scanner){
+    private static void alterarDadosPet(List<Path> files, Scanner scanner){
 
         int opcaoArquivo = 1;
 
@@ -67,16 +76,16 @@ public class AlterarDadosPet {
             opcaoArquivo = scanner.nextInt();
         }
 
-        File arquivoParaModificar = files.get(opcaoArquivo-1);
+        Path arquivoParaModificar = files.get(opcaoArquivo-1);
 
         List<String> linhaLista = lerArquivoPadrao(arquivoParaModificar);
         selecionaLinhaDados(arquivoParaModificar, scanner, linhaLista);
     }
 
 
-    private static List<String> lerArquivoPadrao(File file){
+    private static List<String> lerArquivoPadrao(Path file){
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))){
+        try (BufferedReader br = Files.newBufferedReader(file)){
             String linha;
             List<String> linhaLista = new ArrayList<>();
             int count = 1;
@@ -96,13 +105,12 @@ public class AlterarDadosPet {
         }
     }
 
-    private static void selecionaLinhaDados(File file, Scanner scanner, List<String> linhaLista){
+    private static void selecionaLinhaDados(Path file, Scanner scanner, List<String> linhaLista){
 
         System.out.print("Seleciona o numero que quer alterar (1 a 5): ");
         int opcao = scanner.nextInt();
 
         String linhaParaAlterar= "", novaFrase = "";
-        int num = 0;
 
         Pet pet = new Pet();
 
@@ -155,29 +163,29 @@ public class AlterarDadosPet {
         }
     }
 
-    private static void renomearArquivo(File arquivo, String nome){
+    private static void renomearArquivo(Path arquivo, String nome){
 
+        try{
         Pet pet = new Pet();
         pet.setNome_sobrenome(nome);
 
-        File tituloNovo = new File("petsCadastrados/"+ CriaTituloArquivo.criaNomeArquivoPet(pet) + ".txt");
-        if(arquivo.renameTo(tituloNovo)) {
-            System.out.println("Arquivo renomeado com o novo Nome e Sobrenome!");
+        Path tituloNovo = Paths.get("petsCadastrados/"+ CriaTituloArquivo.criaNomeArquivoPet(pet) + ".txt");
+        Path path = Files.move(arquivo, tituloNovo);
+        System.out.println("Arquivo renomeado para: " + path);
         }
-        else {
-            System.err.println("Falha ao renomear. Verifique se não há arquivo com o novo nome");
+        catch (IOException e){
+            throw new RuntimeException("Erro ao renomear: " + e.getMessage());
         }
     }
 
-    private static void alteraLinhaDados(File file,
+    private static void alteraLinhaDados(Path file,
                                          String linhaParaAlterar,
                                          String novaFrase){
 
         try {
-            Path path = file.toPath();
-            String conteudo = new String(Files.readAllBytes(path));
+            String conteudo = new String(Files.readAllBytes(file));
             String conteudoEditado = conteudo.replace(linhaParaAlterar, novaFrase);
-            Files.write(path, conteudoEditado.getBytes());
+            Files.write(file, conteudoEditado.getBytes());
 
         }
         catch (IOException e){

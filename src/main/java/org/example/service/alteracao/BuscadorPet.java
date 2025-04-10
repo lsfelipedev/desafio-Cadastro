@@ -3,9 +3,9 @@ package org.example.service.alteracao;
 import org.example.model.Tipo;
 import org.example.util.RemovedorAcentos;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -54,15 +54,15 @@ public class BuscadorPet {
         return pesquisa;
     }
 
-    public File arquivosSelecionados(Tipo tipo,
-                                             File arquivo,
+    public Path arquivosSelecionados(Tipo tipo,
+                                             Path arquivo,
                                              Map<String, String> pesquisarPalavras) {
 
 
         String linha;
         boolean palavraEncontrada = false, tipoEncontrado = false;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+        try (BufferedReader br = Files.newBufferedReader(arquivo)) {
             while ((linha = br.readLine()) != null) {
                 linha = linha.toLowerCase();
 
@@ -83,14 +83,14 @@ public class BuscadorPet {
             }
         }
         catch (IOException e) {
-            System.err.println("Erro ao ler arquivo: " + arquivo.getName());
+            System.err.println("Erro ao ler arquivo: " + arquivo.getFileName().toString());
             e.printStackTrace();
         }
         return null;
     }
 
-    public void lerArquivo(File arquivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+    public void lerArquivo(Path arquivo) {
+        try (BufferedReader br = Files.newBufferedReader(arquivo)) {
             String linha;
             while ((linha = br.readLine()) != null) {
 
@@ -102,7 +102,7 @@ public class BuscadorPet {
             }
         }
         catch (IOException e) {
-            System.err.println("Erro ao ler arquivo: " + arquivo.getName());
+            System.err.println("Erro ao ler arquivo: " + arquivo.getFileName().toString());
             e.printStackTrace();
         }
     }

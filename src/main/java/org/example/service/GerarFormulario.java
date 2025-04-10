@@ -4,26 +4,29 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class GerarFormulario {
 
     public static boolean criaArquivoFormulario(){
 
-        if(new File("formulario.txt").exists())
+        Path file = Paths.get("formulario.txt");
+        if(Files.exists(file))
             return false;
 
-        File file = new File("formulario.txt");
-
-        try(FileWriter fileWriter = new FileWriter(file)) {
-            getBufferedWriter(fileWriter);
+        try (BufferedWriter bfWriter = Files.newBufferedWriter(file)) {
+            escreveDadoFormulario(bfWriter);
             return true;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        }
+         catch (IOException e) {
+            throw new RuntimeException("Falha ao escrever os dados no arquivo formulario.txt");
         }
     }
 
-    private static void getBufferedWriter(FileWriter fileWriter) throws IOException {
-        BufferedWriter bfWriter = new BufferedWriter(fileWriter);
+    private static void escreveDadoFormulario(BufferedWriter bfWriter) throws IOException {
         bfWriter.write("Qual o nome e sobrenome do pet?");
         bfWriter.newLine();
         bfWriter.write("Qual o tipo do pet (Cachorro/Gato)?");
@@ -38,6 +41,5 @@ public class GerarFormulario {
         bfWriter.newLine();
         bfWriter.write("Qual a raça do pet?");
         bfWriter.flush();
-        bfWriter.close();
     }
 }

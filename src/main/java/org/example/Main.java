@@ -4,13 +4,13 @@ import org.example.service.alteracao.AlterarDadosPet;
 import org.example.service.cadastro.CadastrarPet;
 import org.example.service.GerarFormulario;
 
-import java.io.File;
-import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         GerarFormulario.criaArquivoFormulario();
         Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
@@ -24,7 +24,7 @@ public class Main {
         System.out.println("(6) Sair");
         System.out.print("Digite o numero da opção do que deseja: ");
 
-        File file = new File("formulario.txt");
+        Path file = Paths.get("formulario.txt");
 
         int response = scanner.nextInt();;
         switch(response){
