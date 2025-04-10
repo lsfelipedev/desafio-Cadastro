@@ -150,13 +150,21 @@ public class AlterarDadosPet {
                 pet.setPeso(ValidacoesHandler.validarPeso(scanner.nextFloat()));
 
                 novaFrase = ValidacoesHandler.validarValoresNulos(pet.getPeso().toString(), " Kg");
-                novaFrase = "5 - " + novaFrase;
+                novaFrase = "6 - " + novaFrase;
                 alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 break;
 
             case 5:
+                scanner.nextLine(); // Quebra de Linha
                 linhaParaAlterar = linhaLista.get(4);
                 System.out.print("Nova Raça: ");
+                pet.setRaca(scanner.nextLine());
+
+                novaFrase = ValidacoesHandler.validarValoresNulos(pet.getRaca(), "");
+                ValidacoesHandler.contemApenasLetras(pet.getRaca());
+                novaFrase = "7 - " + CapitalizaPalavras.Capitalizador(novaFrase);
+
+                alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 break;
 
             default:
