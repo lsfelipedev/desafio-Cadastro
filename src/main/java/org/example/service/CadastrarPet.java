@@ -1,7 +1,8 @@
-package org.example.service.cadastro;
+package org.example.service;
 
 import org.example.exception.ValidacoesHandler;
 import org.example.model.Pet;
+import org.example.service.tools.ValidacaoEnum;
 import org.example.util.CapitalizaPalavras;
 import org.example.util.CriaTituloArquivo;
 import org.example.util.NovoEndereco;

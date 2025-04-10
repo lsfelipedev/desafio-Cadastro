@@ -1,9 +1,12 @@
-package org.example.service.alteracao;
+package org.example.service;
 
 import org.example.exception.ValidacoesHandler;
 import org.example.model.Endereco;
 import org.example.model.Pet;
 import org.example.model.Tipo;
+import org.example.service.tools.BuscadorPet;
+import org.example.service.tools.CriterioArquivoPet;
+import org.example.service.tools.CriterioBuscaPet;
 import org.example.util.CapitalizaPalavras;
 import org.example.util.CriaTituloArquivo;
 import org.example.util.NovoEndereco;
@@ -26,7 +29,7 @@ public class AlterarDadosPet {
 
         Map<String, String> palavrasPesquisar = BuscadorPet.pesquisarPalavra(opcoes, scanner);
 
-        List<Path> files = arquivosFiltradoFormatado(tipo, palavrasPesquisar);
+        List<Path> files = CriterioArquivoPet.arquivosFiltradoFormatado(tipo, palavrasPesquisar);
 
         alterarDadosPet(files, scanner);
 
@@ -34,31 +37,6 @@ public class AlterarDadosPet {
        catch (IOException e){
            throw new RuntimeException("Fala ao alterar o arquivo. \nErro: " + e.getMessage());
        }
-    }
-
-    private static List<Path> arquivosFiltradoFormatado(Tipo tipo, Map<String, String> palavrasPesquisar) throws IOException {
-        Path pasta = Paths.get("petsCadastrados");
-        DirectoryStream<Path> paths = Files.newDirectoryStream(pasta, "*.txt");
-        List<Path> filesSelecionados = new ArrayList<>();
-        AtomicInteger num = new AtomicInteger(1);
-
-        for (Path file : paths) {
-
-            Path arquivoBruto = BuscadorPet.arquivosSelecionados(tipo, file, palavrasPesquisar);
-            if(arquivoBruto != null)
-                filesSelecionados.add(arquivoBruto);
-        }
-        paths.close();
-
-        if(filesSelecionados.size() > 1)
-            filesSelecionados.stream().filter(Objects::nonNull)
-                    .forEach(s-> {
-                        System.out.print(num.getAndIncrement() + ".");
-                        BuscadorPet.lerArquivo(s);
-                        System.out.println();
-                    });
-
-        return filesSelecionados;
     }
 
     private static void alterarDadosPet(List<Path> files, Scanner scanner){
@@ -190,7 +168,6 @@ public class AlterarDadosPet {
     private static void alteraLinhaDados(Path file,
                                          String linhaParaAlterar,
                                          String novaFrase){
-
         try {
             String conteudo = new String(Files.readAllBytes(file));
             String conteudoEditado = conteudo.replace(linhaParaAlterar, novaFrase);

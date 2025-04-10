@@ -1,4 +1,4 @@
-package org.example.service.cadastro;
+package org.example.service.tools;
 
 import org.example.model.Sexo;
 import org.example.model.Tipo;
@@ -9,7 +9,7 @@ import static org.example.model.Tipo.Gato;
 
 public class ValidacaoEnum {
 
-     static Tipo validandoTipoEnum(Scanner scanner) {
+     public static Tipo validandoTipoEnum(Scanner scanner) {
         while (true){
             String tipo = scanner.next().toUpperCase();
 
@@ -24,7 +24,7 @@ public class ValidacaoEnum {
         }
     }
 
-    static Sexo validandoSexoEnum(Scanner scanner) {
+    public static Sexo validandoSexoEnum(Scanner scanner) {
         while (true){
             String sexo = scanner.next().toUpperCase();
 

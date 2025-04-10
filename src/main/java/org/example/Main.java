@@ -1,8 +1,9 @@
 package org.example;
 
-import org.example.service.alteracao.AlterarDadosPet;
-import org.example.service.cadastro.CadastrarPet;
-import org.example.service.GerarFormulario;
+import org.example.service.AlterarDadosPet;
+import org.example.service.CadastrarPet;
+import org.example.util.GerarFormulario;
+import org.example.service.DeletarPet;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,6 +34,9 @@ public class Main {
                 break;
             case 2:
                 AlterarDadosPet.sistemaAlteracao(scanner);
+                break;
+            case 3:
+                DeletarPet.sistemaDeletePet(scanner);
                 break;
             default:
                 System.err.println("essa opção não existe!");
