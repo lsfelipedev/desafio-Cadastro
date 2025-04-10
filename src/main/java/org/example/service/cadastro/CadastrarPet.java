@@ -1,10 +1,10 @@
 package org.example.service.cadastro;
 
 import org.example.exception.ValidacoesHandler;
-import org.example.model.Endereco;
 import org.example.model.Pet;
 import org.example.util.CapitalizaPalavras;
 import org.example.util.CriaTituloArquivo;
+import org.example.util.NovoEndereco;
 
 import java.io.*;
 import java.util.Scanner;
@@ -66,7 +66,7 @@ public class CadastrarPet {
         scanner.nextLine(); // consume a quebra de linha.
         String nomeSobrenome = scanner.nextLine();
         validacoesHandler.validarNomeSobrenome(nomeSobrenome);
-        pet.setNome_sobrenome(capitalizaPalavras.Capitalizador(nomeSobrenome));
+        pet.setNome_sobrenome(CapitalizaPalavras.Capitalizador(nomeSobrenome));
 
         System.out.println(bfReader.readLine());
         pet.setTipo(validacaoEnum.validandoTipoEnum(scanner));
@@ -75,7 +75,7 @@ public class CadastrarPet {
         pet.setSexo(validacaoEnum.validandoSexoEnum(scanner));
 
         System.out.println(bfReader.readLine());
-        pet.setEndereco(verificaEndereco(scanner));
+        pet.setEndereco(NovoEndereco.verificaEndereco(scanner));
 
         System.out.println(bfReader.readLine());
         Float idade = validacoesHandler.validarIdade(scanner.nextFloat());
@@ -93,21 +93,5 @@ public class CadastrarPet {
 
         bfReader.close();
         return pet;
-    }
-
-    private static Endereco verificaEndereco(Scanner scanner){
-
-        System.out.print("Digite o Número da casa: ");
-        int numCasa = scanner.nextInt();
-        scanner.nextLine(); // consume a quebra de linha.
-        System.out.print("Digite a Cidade: ");
-        String cidade = scanner.nextLine();
-        System.out.print("Digite a Rua: ");
-        String rua = scanner.nextLine();
-
-        return new Endereco(
-                numCasa,
-                capitalizaPalavras.Capitalizador(cidade),
-                capitalizaPalavras.Capitalizador(rua));
     }
 }

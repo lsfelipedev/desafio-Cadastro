@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class CapitalizaPalavras {
 
-    public String Capitalizador(String texto) {
+    public static String Capitalizador(String texto) {
         return texto == null ? null :
                 Pattern.compile("(\\b\\p{Ll})(\\p{L}*)")
                         .matcher(texto.toLowerCase())

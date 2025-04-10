@@ -1,10 +1,12 @@
 package org.example.service.alteracao;
 
 import org.example.exception.ValidacoesHandler;
+import org.example.model.Endereco;
 import org.example.model.Pet;
 import org.example.model.Tipo;
 import org.example.util.CapitalizaPalavras;
 import org.example.util.CriaTituloArquivo;
+import org.example.util.NovoEndereco;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -107,14 +109,21 @@ public class AlterarDadosPet {
                 scanner.nextLine(); // Quebra de Linha
                 linhaParaAlterar = linhaLista.getFirst();
                 System.out.print("Novo Nome e Sobrenome: ");
-                novaFrase = ValidacoesHandler.validarValoresNulos(scanner.nextLine());
+
+                validacoesHandler.contemApenasLetras(novaFrase);
                 validacoesHandler.validarNomeSobrenome(novaFrase);
-                novaFrase = capitalizaPalavras.Capitalizador(novaFrase);
+                novaFrase = ValidacoesHandler.validarValoresNulos(scanner.nextLine());
+
+                novaFrase = CapitalizaPalavras.Capitalizador(novaFrase);
                 alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 renomearArquivo(file, novaFrase);
                 break;
             case 2:
                 linhaParaAlterar = linhaLista.get(1);
+                Endereco endereco = NovoEndereco.verificaEndereco(scanner);
+                novaFrase = endereco.toString();
+
+                alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 break;
             case 3:
                 linhaParaAlterar = linhaLista.get(2);
@@ -128,7 +137,6 @@ public class AlterarDadosPet {
             default:
                 System.err.println("Opção Invalida!! Escolha entre 1 a 5.");
         }
-
     }
 
     private static void renomearArquivo(File arquivo, String nome){
