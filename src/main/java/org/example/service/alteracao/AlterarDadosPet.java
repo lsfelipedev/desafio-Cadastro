@@ -71,7 +71,6 @@ public class AlterarDadosPet {
 
         List<String> linhaLista = lerArquivoPadrao(arquivoParaModificar);
         selecionaLinhaDados(arquivoParaModificar, scanner, linhaLista);
-
     }
 
 
@@ -114,14 +113,14 @@ public class AlterarDadosPet {
                 validacoesHandler.validarNomeSobrenome(novaFrase);
                 novaFrase = ValidacoesHandler.validarValoresNulos(scanner.nextLine());
 
-                novaFrase = CapitalizaPalavras.Capitalizador(novaFrase);
+                novaFrase = "1 - " + CapitalizaPalavras.Capitalizador(novaFrase);
                 alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 renomearArquivo(file, novaFrase);
                 break;
             case 2:
                 linhaParaAlterar = linhaLista.get(1);
                 Endereco endereco = NovoEndereco.verificaEndereco(scanner);
-                novaFrase = endereco.toString();
+                novaFrase ="2 - " + endereco.toString();
 
                 alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 break;
@@ -153,7 +152,9 @@ public class AlterarDadosPet {
         }
     }
 
-    private static void alteraLinhaDados(File file, String linhaParaAlterar, String novaFrase){
+    private static void alteraLinhaDados(File file,
+                                         String linhaParaAlterar,
+                                         String novaFrase){
 
         try {
             Path path = file.toPath();
@@ -165,6 +166,5 @@ public class AlterarDadosPet {
         catch (IOException e){
             throw new RuntimeException("falha ao fazer alteração! \nErro: " + e.getMessage());
         }
-
     }
 }
