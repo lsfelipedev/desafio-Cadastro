@@ -1,7 +1,7 @@
 1 - Não Informado
 2 - Cachorro
 3 - Macho
-2 - Rua Flamengo Pipoqueiro, 13, Xique Xique
-5 - 7.0
+4 - Rua Flamengo Pipoqueiro, 13, Xique Xique
+5 - 15.0 anos
 6 - 29.0
 7 - Bulldog Frances

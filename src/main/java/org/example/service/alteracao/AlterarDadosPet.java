@@ -122,28 +122,34 @@ public class AlterarDadosPet {
                 alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 renomearArquivo(file, novaFrase);
                 break;
+
             case 2:
                 linhaParaAlterar = linhaLista.get(1);
                 Endereco endereco = NovoEndereco.verificaEndereco(scanner);
-                novaFrase ="2 - " + endereco.toString();
+                novaFrase ="4 - " + endereco.toString();
 
                 alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 break;
+
             case 3:
+                System.out.print("Nova Idade: ");
                 linhaParaAlterar = linhaLista.get(2);
                 pet.setIdade(validacoesHandler.validarIdade(scanner.nextFloat()));
 
                 novaFrase = ValidacoesHandler.validarValoresNulos(pet.getIdade().toString(), " anos");
 
-                novaFrase = "3 = " + novaFrase;
-
+                novaFrase = "5 - " + novaFrase;
+                alteraLinhaDados(file, linhaParaAlterar, novaFrase);
                 break;
+
             case 4:
                 linhaParaAlterar = linhaLista.get(3);
                 break;
+
             case 5:
                 linhaParaAlterar = linhaLista.get(4);
                 break;
+
             default:
                 System.err.println("Opção Invalida!! Escolha entre 1 a 5.");
         }
