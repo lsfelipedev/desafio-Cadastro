@@ -102,6 +102,9 @@ public class AlterarDadosPet {
         int opcao = scanner.nextInt();
 
         String linhaParaAlterar= "", novaFrase = "";
+        int num = 0;
+
+        Pet pet = new Pet();
 
         switch (opcao){
             case 1:
@@ -109,9 +112,11 @@ public class AlterarDadosPet {
                 linhaParaAlterar = linhaLista.getFirst();
                 System.out.print("Novo Nome e Sobrenome: ");
 
+                novaFrase = scanner.nextLine();
                 validacoesHandler.contemApenasLetras(novaFrase);
                 validacoesHandler.validarNomeSobrenome(novaFrase);
-                novaFrase = ValidacoesHandler.validarValoresNulos(scanner.nextLine());
+
+                novaFrase = ValidacoesHandler.validarValoresNulos(novaFrase, "");
 
                 novaFrase = "1 - " + CapitalizaPalavras.Capitalizador(novaFrase);
                 alteraLinhaDados(file, linhaParaAlterar, novaFrase);
@@ -126,6 +131,12 @@ public class AlterarDadosPet {
                 break;
             case 3:
                 linhaParaAlterar = linhaLista.get(2);
+                pet.setIdade(validacoesHandler.validarIdade(scanner.nextFloat()));
+
+                novaFrase = ValidacoesHandler.validarValoresNulos(pet.getIdade().toString(), " anos");
+
+                novaFrase = "3 = " + novaFrase;
+
                 break;
             case 4:
                 linhaParaAlterar = linhaLista.get(3);

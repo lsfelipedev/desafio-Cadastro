@@ -36,7 +36,7 @@ public class CadastrarPet {
 
             BufferedWriter bfw = new BufferedWriter(fw);
 
-            bfw.write("1 - " + ValidacoesHandler.validarValoresNulos(newPet.getNome_sobrenome()));
+            bfw.write("1 - " + ValidacoesHandler.validarValoresNulos(newPet.getNome_sobrenome(), ""));
             bfw.newLine();
             bfw.write("2 - " + newPet.getTipo().getAnimal());
             bfw.newLine();
@@ -44,11 +44,11 @@ public class CadastrarPet {
             bfw.newLine();
             bfw.write("4 - " + newPet.getEndereco().toString());
             bfw.newLine();
-            bfw.write("5 - " + ValidacoesHandler.validarValoresNulos(newPet.getIdade().toString()) + " anos");
+            bfw.write("5 - " + ValidacoesHandler.validarValoresNulos(newPet.getIdade().toString(), " anos"));
             bfw.newLine();
-            bfw.write("6 - " + ValidacoesHandler.validarValoresNulos(newPet.getPeso().toString()) + "kg");
+            bfw.write("6 - " + ValidacoesHandler.validarValoresNulos(newPet.getPeso().toString(), "kg"));
             bfw.newLine();
-            bfw.write("7 - " + ValidacoesHandler.validarValoresNulos(newPet.getRaca()));
+            bfw.write("7 - " + ValidacoesHandler.validarValoresNulos(newPet.getRaca(), ""));
             bfw.flush();
             bfw.close();
         }

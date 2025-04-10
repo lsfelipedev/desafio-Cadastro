@@ -30,10 +30,10 @@ public class ValidacoesHandler {
         return idade;
     }
 
-    public static String validarValoresNulos(String pet) {
+    public static String validarValoresNulos(String pet, String sufixo) {
 
         if(!pet.isEmpty())
-            return pet;
+            return pet + sufixo;
         return "NÃO INFORMADO";
     }
 }
