@@ -12,12 +12,10 @@ import org.example.util.CriaTituloArquivo;
 import org.example.util.NovoEndereco;
 
 import java.io.*;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class AlterarDadosPet {
 
@@ -50,12 +48,12 @@ public class AlterarDadosPet {
 
         Path arquivoParaModificar = files.get(opcaoArquivo-1);
 
-        List<String> linhaLista = lerArquivoPadrao(arquivoParaModificar);
+        List<String> linhaLista = lerArquivoModificado(arquivoParaModificar);
         selecionaLinhaDados(arquivoParaModificar, scanner, linhaLista);
     }
 
 
-    private static List<String> lerArquivoPadrao(Path file){
+    private static List<String> lerArquivoModificado(Path file){
 
         try (BufferedReader br = Files.newBufferedReader(file)){
             String linha;

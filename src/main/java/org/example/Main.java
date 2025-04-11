@@ -1,10 +1,7 @@
 package org.example;
 
-import org.example.service.AlterarDadosPet;
-import org.example.service.CadastrarPet;
-import org.example.service.ListarTodosPet;
+import org.example.service.*;
 import org.example.util.GerarFormulario;
-import org.example.service.DeletarPet;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,6 +38,9 @@ public class Main {
                 break;
             case 4:
                 ListarTodosPet.listagemPets();
+                break;
+            case 5:
+                ListarCriterioPet.arquivosFiltradoCriterio(scanner);
                 break;
             default:
                 System.err.println("essa opção não existe!");
