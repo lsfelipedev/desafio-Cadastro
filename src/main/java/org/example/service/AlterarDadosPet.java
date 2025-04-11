@@ -26,9 +26,7 @@ public class AlterarDadosPet {
                     CriterioBuscaPet.segundoCriterio(scanner)};
 
             Map<String, String> palavrasPesquisar = BuscadorPet.pesquisarPalavra(opcoes, scanner);
-
             List<Path> files = CriterioArquivoPet.arquivosFiltradoFormatado(tipo, palavrasPesquisar);
-
             alterarDadosPet(files, scanner);
 
            System.out.println("Sistema Atualizado com Sucesso!");
