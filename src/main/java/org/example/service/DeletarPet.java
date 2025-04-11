@@ -10,7 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DeletarPet {
 
@@ -23,8 +25,9 @@ public class DeletarPet {
         Map<String, String> palavrasPesquisar = BuscadorPet.pesquisarPalavra(opcoes, scanner);
 
         try {
-        List<Path> files = CriterioArquivoPet.arquivosFiltradoFormatado(tipo, palavrasPesquisar);
-        deletePet(files, scanner);
+            List<Path> files = CriterioArquivoPet.arquivosFiltradoFormatado(tipo, palavrasPesquisar);
+            deletePet(files, scanner);
+            System.out.println("Registro do Pet foi Deletado com Sucesso!");
         }
         catch (IOException e){
             throw new RuntimeException("falha ao lista os arquivos do resultado da busca.\nErro: " + e.getMessage());
@@ -33,6 +36,13 @@ public class DeletarPet {
 
     private static void deletePet(List<Path> files, Scanner scanner){
 
+        AtomicInteger num = new AtomicInteger(1);
+        files.stream().filter(Objects::nonNull)
+                .forEach(s-> {
+                    System.out.print(num.getAndIncrement() + ".");
+                    BuscadorPet.lerArquivo(s);
+                    System.out.println();
+                });
         System.out.print("Escolha o numero do PET registrado que deseja deletar: ");
         int opcao = scanner.nextInt();
         Path fileToDelete = files.get(opcao - 1);

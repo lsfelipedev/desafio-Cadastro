@@ -42,6 +42,9 @@ public class Main {
             case 5:
                 ListarCriterioPet.arquivosFiltradoCriterio(scanner);
                 break;
+            case 6:
+                System.out.println("Saindo do Sistema..");
+                break;
             default:
                 System.err.println("essa opção não existe!");
         }

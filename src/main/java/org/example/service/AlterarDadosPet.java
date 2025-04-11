@@ -21,16 +21,17 @@ public class AlterarDadosPet {
 
     public static void sistemaAlteracao(Scanner scanner){
        try {
-        Tipo tipo = CriterioBuscaPet.selecioneTipoAnimal(scanner);
-        int[] opcoes = {CriterioBuscaPet.primeiroCriterio(scanner),
-                CriterioBuscaPet.segundoCriterio(scanner)};
+            Tipo tipo = CriterioBuscaPet.selecioneTipoAnimal(scanner);
+            int[] opcoes = {CriterioBuscaPet.primeiroCriterio(scanner),
+                    CriterioBuscaPet.segundoCriterio(scanner)};
 
-        Map<String, String> palavrasPesquisar = BuscadorPet.pesquisarPalavra(opcoes, scanner);
+            Map<String, String> palavrasPesquisar = BuscadorPet.pesquisarPalavra(opcoes, scanner);
 
-        List<Path> files = CriterioArquivoPet.arquivosFiltradoFormatado(tipo, palavrasPesquisar);
+            List<Path> files = CriterioArquivoPet.arquivosFiltradoFormatado(tipo, palavrasPesquisar);
 
-        alterarDadosPet(files, scanner);
+            alterarDadosPet(files, scanner);
 
+           System.out.println("Sistema Atualizado com Sucesso!");
        }
        catch (IOException e){
            throw new RuntimeException("Fala ao alterar o arquivo. \nErro: " + e.getMessage());
