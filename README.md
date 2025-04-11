@@ -2,9 +2,9 @@
 
 ### Desafio criado por Lucas Carrilho - [@devmagro](https://www.linkedin.com/in/karilho/)
 
-Twitter: [@devmagro 🐦 ](https://instagram.com/devmagro)
+Twitter: [@devmagro 🐦 ](https://x.com/devmagro)
 
-Instagram: [@devmagro 📸](https://x.com/devmagro)
+Instagram: [@devmagro 📸](https://instagram.com/devmagro)
 
 YouTube: [@devmagro 🎥](https://www.youtube.com/@devmagro)
 
