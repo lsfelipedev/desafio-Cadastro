@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.service.AlterarDadosPet;
 import org.example.service.CadastrarPet;
+import org.example.service.ListarTodosPet;
 import org.example.util.GerarFormulario;
 import org.example.service.DeletarPet;
 
@@ -37,6 +38,9 @@ public class Main {
                 break;
             case 3:
                 DeletarPet.sistemaDeletePet(scanner);
+                break;
+            case 4:
+                ListarTodosPet.listagemPets();
                 break;
             default:
                 System.err.println("essa opção não existe!");
