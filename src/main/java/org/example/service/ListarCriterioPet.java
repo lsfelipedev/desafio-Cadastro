@@ -81,10 +81,10 @@ public class ListarCriterioPet {
             System.out.println("1 - Nome ou sobrenome");
             System.out.println("2 - Tipo(Cachorro/Gato)");
             System.out.println("3 - Sexo(Macho/Femea)");
-            System.out.println("4 - Idade");
-            System.out.println("5 - Peso");
-            System.out.println("6 - Raça");
-            System.out.println("7 - Endereço");
+            System.out.println("4 - Endereço");
+            System.out.println("5 - Idade");
+            System.out.println("6 - Peso");
+            System.out.println("7 - Raça");
             int criterio = scanner.nextInt();
 
             if (criterio >= 1 && criterio <= 7)

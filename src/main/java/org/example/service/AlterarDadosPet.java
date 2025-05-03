@@ -19,7 +19,7 @@ import java.util.*;
 
 public class AlterarDadosPet {
 
-    public static void sistemaAlteracao(Scanner scanner){
+    public static void sistemaAlteracao(Scanner scanner) throws RuntimeException{
        try {
             Tipo tipo = CriterioBuscaPet.selecioneTipoAnimal(scanner);
             int[] opcoes = {CriterioBuscaPet.primeiroCriterio(scanner),
@@ -27,12 +27,15 @@ public class AlterarDadosPet {
 
             Map<String, String> palavrasPesquisar = BuscadorPet.pesquisarPalavra(opcoes, scanner);
             List<Path> files = CriterioArquivoPet.arquivosFiltradoFormatado(tipo, palavrasPesquisar);
+
+            if (files.isEmpty())
+                throw new RuntimeException("Nenhum arquivo foi encontrado com esses dados fornecidos.");
             alterarDadosPet(files, scanner);
 
            System.out.println("Sistema Atualizado com Sucesso!");
        }
        catch (IOException e){
-           throw new RuntimeException("Fala ao alterar o arquivo. \nErro: " + e.getMessage());
+           throw new RuntimeException("Falha ao alterar o arquivo. \nErro: " + e.getMessage());
        }
     }
 

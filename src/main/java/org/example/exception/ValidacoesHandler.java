@@ -25,7 +25,7 @@ public class ValidacoesHandler {
 
     public static  Float validarIdade(Float idade){
         if (idade > 20)
-            throw new RuntimeException("Só é permitido menor de 20 anos.");
+            throw new RuntimeException("Só é permitido idade menor de 20 anos.");
         return idade;
     }
 
