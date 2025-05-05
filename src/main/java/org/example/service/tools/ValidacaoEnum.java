@@ -30,7 +30,7 @@ public class ValidacaoEnum {
 
             if (sexo.equals("MACHO"))
                 return Sexo.Macho;
-            else if (sexo.equals("GATO"))
+            else if (sexo.equals("FEMEA") || sexo.equals("FÊMEA"))
                 return Sexo.Femea;
             else
                 System.err.println("Esse sexo não é uma opção.\nEscolha entre Macho ou Femea!");
