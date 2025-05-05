@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DeletarPet {
 
-    public static void sistemaDeletePet(Scanner scanner){
+    public static void sistemaDeletePet(Scanner scanner) throws RuntimeException{
 
         Tipo tipo = CriterioBuscaPet.selecioneTipoAnimal(scanner);
         int[] opcoes = {CriterioBuscaPet.primeiroCriterio(scanner),
@@ -26,6 +26,9 @@ public class DeletarPet {
 
         try {
             List<Path> files = CriterioArquivoPet.arquivosFiltradoFormatado(tipo, palavrasPesquisar);
+            if (files.isEmpty())
+                throw new RuntimeException("Nenhum arquivo foi encontrado com esses dados fornecidos.");
+
             deletePet(files, scanner);
             System.out.println("Registro do Pet foi Deletado com Sucesso!");
         }

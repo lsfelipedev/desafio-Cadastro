@@ -54,6 +54,9 @@ public class Main {
                         System.err.println("essa opção não existe!");
                 }
 
+                if(response == 6)
+                    break;
+
             }catch (InputMismatchException e){
                 System.err.println("Apenas NUMERO é permitido no Sistema de Menu.");
                 scanner.nextLine(); // LIMPANDO O CACHE DO SCANNER
@@ -61,6 +64,7 @@ public class Main {
             catch (RuntimeException e){
                 System.err.println("Erro: " + e.getMessage());
             }
+
             Thread.sleep(1000);
         }
     }
