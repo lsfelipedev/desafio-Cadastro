@@ -23,11 +23,16 @@ public class ListarCriterioPet {
 
             List<Path> pathList = listaPetFiltrado(paths, palavra);
 
+            if(pathList.isEmpty())
+                throw new RuntimeException("Nenhum Pet foi encontrado com esses dados.");
+
+            System.out.println("=============== PETS ENCONTRADOS ===============");
             for (Path file : pathList) {
                 System.out.println("Arquivo: " + file.getFileName().toString());
                 lerArquivoPadrao(file);
                 System.out.println("");
             }
+            System.out.println("================================================");
         }
         catch (IOException e){
             throw new RuntimeException("Falha ao Listar os Pets por Critério.\nErro: " + e.getMessage());
@@ -40,13 +45,13 @@ public class ListarCriterioPet {
         List<Path> fileList = new ArrayList<>();
 
         for (Path file : paths) {
-            if(naosei(file, palavra))
+            if(validaListaFiltradas(file, palavra))
                 fileList.add(file);
         }
         return fileList;
     }
 
-    private static boolean naosei(Path file, String palavra) throws IOException {
+    private static boolean validaListaFiltradas(Path file, String palavra) throws IOException {
 
         BufferedReader bfReader = Files.newBufferedReader(file);
         String linha;
@@ -55,11 +60,13 @@ public class ListarCriterioPet {
             linha = RemovedorAcentos.tirarAcentosPalavras(linha.toLowerCase());
             palavra = RemovedorAcentos.tirarAcentosPalavras(palavra.toLowerCase());
 
-            if(linha.startsWith(String.valueOf(palavra.charAt(0)))){
-                if(linha.contains(palavra.substring(1)))
+            if(linha.startsWith(String.valueOf(palavra.charAt(0))))
+                if(linha.contains(palavra.substring(1))) {
+                    bfReader.close();
                     return true;
-            }
+                }
         }
+        bfReader.close();
         return false;
     }
 

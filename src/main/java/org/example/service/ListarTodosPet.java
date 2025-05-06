@@ -16,11 +16,13 @@ public class ListarTodosPet {
         int count = 1;
         try (DirectoryStream<Path> paths = Files.newDirectoryStream(pasta, "*.txt");){
 
+            System.out.println("======================================== TODOS PETS CADASTRADOS ========================================");
             for (Path path : paths) {
                 System.out.print(count++ + ".");
                 BuscadorPet.lerArquivo(path);
                 System.out.println();
             }
+            System.out.println("========================================================================================================");
         }
         catch (IOException e){
             throw new RuntimeException("Falha ao listar todo os Pets.\nErro: " + e.getMessage());
