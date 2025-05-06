@@ -40,13 +40,13 @@ public class DeletarPet {
     private static void deletePet(List<Path> files, Scanner scanner){
 
         AtomicInteger num = new AtomicInteger(1);
-        files.stream().filter(Objects::nonNull)
-                .forEach(s-> {
-                    System.out.print(num.getAndIncrement() + ".");
-                    BuscadorPet.lerArquivo(s);
-                    System.out.println();
-                });
-        System.out.print("Escolha o numero do PET registrado que deseja deletar: ");
+
+        if(files.size() == 1) {
+            System.out.print("1.");
+            BuscadorPet.lerArquivo(files.getFirst());
+        }
+
+        System.out.println("\nEscolha o numero do PET registrado que deseja deletar: ");
         int opcao = scanner.nextInt();
         Path fileToDelete = files.get(opcao - 1);
 

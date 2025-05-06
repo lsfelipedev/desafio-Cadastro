@@ -2,6 +2,6 @@
 2 - Cachorro
 3 - Macho
 4 - Rua Catatau Ze Comeia, 35, Sg
-5 - 0.0 anos
+5 - 7.0 anos
 5 - 21.1Kg
 7 - NÃO INFORMADO
